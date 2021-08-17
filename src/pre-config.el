@@ -89,5 +89,13 @@
 (setq kill-do-not-save-duplicates t)
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
+;; Configure programming modes
+(setq display-line-numbers-width-start 3)
+(setq display-fill-column-indicator-character "│")
+(add-hook 'prog-mode-hook
+          #'(lambda ()
+              (display-line-numbers-mode)
+              (display-fill-column-indicator-mode)
+              (column-number-mode)))
 
 ;;; pre-config.el ends here
