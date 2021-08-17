@@ -1,3 +1,3 @@
 #!/bin/bash
 
-env HOME=`pwd` ./scripts/install-alpha-emacs.sh $1
+env ALPHA_EMACS_TEST="yes" ./scripts/install-alpha-emacs.sh "$@"

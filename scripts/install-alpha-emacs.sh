@@ -3,51 +3,66 @@
 # Prologue
 set -e
 
+# Managing test mode
+if [ "$ALPHA_EMACS_TEST" == 'yes' ]
+then
+  export HOME=`pwd`
+fi
+
 # Setting global variables
 EMACSDIR="$HOME/.emacs.d"
 ALPHA_BOOTSTRAP="./src/alpha/bootstrap.el"
 
 print_usage () {
-  echo -e "Usage: alpha-emacs [COMMAND]\n\n" \
+  echo -e "Usage: install-alpha-emacs.sh [COMMAND]\n\n" \
           "Commands:\n" \
           "  install      installs Alpha Emacs in user home directory\n" \
+          "  run          run installed Alpha Emacs (for testing only)"
           "  uninstall    completely uninstalls Alpha Emacs"
 }
 
 install_alpha_emacs () {
   local SRCDIR=./src
-
   echo "Installing Alpha Emacs..."
-  if [ -d $EMACSDIR ]
+  if [ "$ALPHA_EMACS_TEST" != 'yes' ]
   then
-    echo "User Emacs directory already exists."
-    while true; do
-      read -p "Do you wish to erase the content of user Emacs directory? (YES/no)" YN
-      case $YN in
-        YES)
-          echo "Removing user Emacs directory..."
-          rm -frv $EMACSDIR
-          echo "User Emacs directory successfully removed"
-          break
-          ;;
-        no)
-          echo "Alpha Emacs installation cannot continue."
-          exit 1
-          ;;
-        *)
-          echo "please answer YES or no"
-          ;;
-      esac
-    done
+    if [ -d $EMACSDIR ]
+    then
+      echo "User Emacs directory already exists."
+      while true; do
+        read -p "Do you wish to erase the content of user Emacs directory? (YES/no)" YN
+        case $YN in
+          YES)
+            echo "Removing user Emacs directory..."
+            rm -frv $EMACSDIR
+            echo "User Emacs directory successfully removed"
+            break
+            ;;
+          no)
+            echo "Alpha Emacs installation cannot continue."
+            exit 1
+            ;;
+          *)
+            echo "please answer YES or no"
+            ;;
+        esac
+      done
+    fi
+    echo "Creating Emacs user directory..."
+    mkdir -v $EMACSDIR
   fi
-  echo "Creating Emacs user directory..."
-  mkdir -v $EMACSDIR
   echo "Installing Alpha Emacs files..."
   cp -rv $SRCDIR/* $EMACSDIR/
   echo "Alpha Emacs files successfully installed."
   echo "Boostrapping Alpha Emacs..."
   emacs -Q --script $ALPHA_BOOTSTRAP
   exit 0
+}
+
+run_alpha_emacs () {
+  echo "Running Alpha Emacs..."
+  emacs
+  echo "Finished running Alpha Emacs..."
 }
 
 uninstall_alpha_emacs() {
@@ -66,6 +81,9 @@ uninstall_alpha_emacs() {
 case $1 in
   install)
     install_alpha_emacs
+    ;;
+  run)
+    run_alpha_emacs
     ;;
   uninstall)
     uninstall_alpha_emacs
