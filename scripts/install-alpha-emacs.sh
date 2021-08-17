@@ -24,9 +24,9 @@ print_usage () {
 install_alpha_emacs () {
   local SRCDIR=./src
   echo "Installing Alpha Emacs..."
-  if [ "$ALPHA_EMACS_TEST" != 'yes' ]
+  if [ -d $EMACSDIR ]
   then
-    if [ -d $EMACSDIR ]
+    if [ "$ALPHA_EMACS_TEST" != 'yes' ]
     then
       echo "User Emacs directory already exists."
       while true; do
@@ -48,6 +48,9 @@ install_alpha_emacs () {
         esac
       done
     fi
+  fi
+  if ! [ -d $EMACSDIR ]
+  then
     echo "Creating Emacs user directory..."
     mkdir -v $EMACSDIR
   fi
@@ -61,7 +64,12 @@ install_alpha_emacs () {
 
 run_alpha_emacs () {
   echo "Running Alpha Emacs..."
-  emacs
+  if [ "$ALPHA_EMACS_TEST" == 'yes' ]
+  then
+    emacs --debug-init
+  else
+    emacs
+  fi
   echo "Finished running Alpha Emacs..."
 }
 

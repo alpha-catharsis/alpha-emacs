@@ -1,7 +1,7 @@
 ;;; bootstrap.el -*- lexical-binding: t; -*-
 
 (defconst system-packages-directory (concat user-emacs-directory
-                                            "alpha/system-packages")
+                                            "alpha/system-packages/")
   "Directory containing the installation scripts for system packages.")
 
 (defun alpha/install-straight ()
@@ -27,9 +27,9 @@
                               nil "^install-.*.el$" nil)))
     (dolist (file installation-files)
       (let ((package-name (substring file 8 (- (length file) 3)))
-            (file-full-path (concat system-packages-directory "/" file)))
+            (file-full-path (concat system-packages-directory file)))
         (message "Installing system package '%s'..." package-name)
-        (load file-full-path nil t t)
+        (load file-full-path nil 'nomessage 'nosuffix)
         (message "Successfully installed system package '%s'." package-name)
         )))
 
