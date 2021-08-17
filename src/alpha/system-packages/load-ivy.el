@@ -7,7 +7,10 @@
   (setq enable-recursive-minibuffers nil))
 
 (use-package swiper
-  :bind (("C-c s " . swiper)))
+  :bind (("C-c s s" . swiper)))
+
+(use-package ivy-avy
+  :bind (("C-c n s" . ivy-avy)))
 
 (use-package counsel)
 
