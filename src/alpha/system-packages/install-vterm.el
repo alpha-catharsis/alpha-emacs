@@ -2,6 +2,6 @@
 
 (straight-use-package 'vterm)
 (setq vterm-always-compile-module t)
-(vterm-module-compile)
+(require 'vterm)
 
 ;;; install-vterm.el ends here

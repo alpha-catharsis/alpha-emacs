@@ -1,15 +1,5 @@
 ;;; pre-config.el -*- lexical-binding: t; -*-
 
-;; Loadign staight
-(defconst bootstrap-version 5)
-(load (expand-file-name "straight/repos/straight.el/bootstrap.el"
-                        user-emacs-directory) nil 'nomessage 'nosuffix)
-
-;; Enabling straight integration with use-package
-(straight-use-package 'use-package)
-(setq straight-enable-use-package-integration t)
-(setq straight-use-package-by-default t)
-
 ;; Setting UTF-8 as default coding system
 (set-language-environment "UTF-8")
 

@@ -6,19 +6,26 @@ set -e
 # Managing test mode
 if [ "$ALPHA_EMACS_TEST" == 'yes' ]
 then
+  echo -e "*** TEST MODE ENABLED ***\n"
   export HOME=`pwd`
 fi
 
 # Setting global variables
 EMACSDIR="$HOME/.emacs.d"
-ALPHA_BOOTSTRAP="./src/alpha/bootstrap.el"
+ALPHADIR="$EMACSDIR/alpha"
+MNGMTDIR="$ALPHADIR/management"
+ALPHA_BOOTSTRAP="$MNGMTDIR/bootstrap.el"
+ALPHA_REBUILD="$MNGMTDIR/rebuild.el"
+ALPHA_UPDATE="$MNGMTDIR/update.el"
 
 print_usage () {
-  echo -e "Usage: install-alpha-emacs.sh [COMMAND]\n\n" \
+  echo -e "Usage: install-alpha [COMMAND]\n\n" \
           "Commands:\n" \
-          "  install      installs Alpha Emacs in user home directory\n" \
-          "  run          run installed Alpha Emacs (for testing only)"
-          "  uninstall    completely uninstalls Alpha Emacs"
+          "  install           installs Alpha Emacs in user home directory\n" \
+          "  rebuild           rebuild installed packages\n" \
+          "  run               run installed Alpha Emacs\n" \
+          "  update            update installed packages\n" \
+          "  uninstall         completely uninstalls Alpha Emacs\n"
 }
 
 install_alpha_emacs () {
@@ -34,7 +41,7 @@ install_alpha_emacs () {
         case $YN in
           YES)
             echo "Removing user Emacs directory..."
-            rm -frv $EMACSDIR
+            rm -fr $EMACSDIR
             echo "User Emacs directory successfully removed"
             break
             ;;
@@ -52,14 +59,18 @@ install_alpha_emacs () {
   if ! [ -d $EMACSDIR ]
   then
     echo "Creating Emacs user directory..."
-    mkdir -v $EMACSDIR
+    mkdir $EMACSDIR
+    echo "Emacs user directory successfully created."
   fi
   echo "Installing Alpha Emacs files..."
-  cp -rv $SRCDIR/* $EMACSDIR/
+  cp -r $SRCDIR/* $EMACSDIR/
   echo "Alpha Emacs files successfully installed."
-  echo "Boostrapping Alpha Emacs..."
-  emacs -Q --script $ALPHA_BOOTSTRAP
+  emacs -Q --batch -l $ALPHA_BOOTSTRAP
   exit 0
+}
+
+rebuild_alpha_emacs() {
+  emacs -Q --batch -l $ALPHA_REBUILD
 }
 
 run_alpha_emacs () {
@@ -73,11 +84,15 @@ run_alpha_emacs () {
   echo "Finished running Alpha Emacs..."
 }
 
+update_alpha_emacs() {
+  emacs -Q --batch -l $ALPHA_UPDATE
+}
+
 uninstall_alpha_emacs() {
   if [ -d $EMACSDIR ]
   then
     echo "Uninstalling Alpha Emacs..."
-    rm -frv $EMACSDIR
+    rm -fr $EMACSDIR
     echo "Alpha Emacs successfully uninstalled."
     exit 0
   else
@@ -90,8 +105,14 @@ case $1 in
   install)
     install_alpha_emacs
     ;;
+  rebuild)
+    rebuild_alpha_emacs
+    ;;
   run)
     run_alpha_emacs
+    ;;
+  update)
+    update_alpha_emacs
     ;;
   uninstall)
     uninstall_alpha_emacs

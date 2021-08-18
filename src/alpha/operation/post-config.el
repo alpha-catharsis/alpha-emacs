@@ -5,5 +5,4 @@
 (setq gcmh-high-cons-threshold (* 16 1024 1024))
 (gcmh-mode)
 
-
 ;;; post-config.el ends here

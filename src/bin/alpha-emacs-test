@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ALPHA_EMACS_PATH="${0%-test}"
+env ALPHA_EMACS_TEST="yes" $ALPHA_EMACS_PATH "$@"
