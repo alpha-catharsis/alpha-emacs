@@ -44,7 +44,7 @@ install_alpha_emacs () {
     mkdir $ALPHAUSERDIR
     echo "Alpha Emacs user directory succesfully created."
   fi
-  if [ -f $INSTALLEDCONF ]
+  if [ -f $INSTALLEDCONF ] && [ "$ALPHA_EMACS_TEST" != 'yes' ]
   then
     echo "Alpha Emacs user configuration file already exists."
   else
