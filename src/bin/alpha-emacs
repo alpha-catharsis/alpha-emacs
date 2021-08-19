@@ -12,8 +12,12 @@ fi
 
 # Setting global variables
 EMACSDIR="$HOME/.emacs.d"
+ALPHAUSERDIR="$HOME/.alpha-emacs"
 ALPHADIR="$EMACSDIR/alpha"
 MNGMTDIR="$ALPHADIR/management"
+CONFDIR="$ALPHADIR/configuration"
+CONFEXAMPLE="$CONFDIR/alpha-conf.el"
+INSTALLEDCONF="$ALPHAUSERDIR/alpha-conf.el"
 ALPHA_BOOTSTRAP="$MNGMTDIR/bootstrap.el"
 ALPHA_REBUILD="$MNGMTDIR/rebuild.el"
 ALPHA_UPDATE="$MNGMTDIR/update.el"
@@ -31,6 +35,22 @@ print_usage () {
 install_alpha_emacs () {
   local SRCDIR=./src
   echo "Installing Alpha Emacs..."
+  if [ -d $ALPHAUSERDIR ]
+  then
+    echo "Alpha Emacs user directory alredy exists."
+  else
+    echo "Creating Alpha Emacs user directory..."
+    mkdir $ALPHAUSERDIR
+    echo "Alpha Emacs user directory succesfully created."
+  fi
+  if [ -f $INSTALLEDCONF ]
+  then
+    echo "Alpha Emacs user configuration file already exists."
+  else
+    echo "Initializing user configuration file..."
+    cp $CONFEXAMPLE $INSTALLEDCONF
+    echo "User configuration file initialized."
+  fi
   if [ -d $EMACSDIR ]
   then
     if [ "$ALPHA_EMACS_TEST" != 'yes' ]
@@ -42,7 +62,7 @@ install_alpha_emacs () {
           YES)
             echo "Removing user Emacs directory..."
             rm -fr $EMACSDIR
-            echo "User Emacs directory successfully removed"
+            echo "User Emacs directory successfully removed."
             break
             ;;
           no)
