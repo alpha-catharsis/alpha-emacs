@@ -28,6 +28,9 @@
 (setq visible-cursor nil)
 (blink-cursor-mode 0)
 
+;; Display keystrokes immesiately
+(setq echo-keystrokes 0.1)
+
 ;; Highlighting configuration
 (setq highlight-nonselected-windows nil)
 
