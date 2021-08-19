@@ -12,6 +12,7 @@
 
 (alpha/load-user-configuration-file)
 (print (hash-table-keys alpha/tasks))
+(print (gethash "*" alpha/tasks))
 (print (gethash "programming" alpha/tasks))
 (print (gethash "python-programming" alpha/tasks))
 (print (gethash "text-editing" alpha/tasks))
