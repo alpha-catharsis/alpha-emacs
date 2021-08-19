@@ -2,7 +2,6 @@
 
 ;; Loading alpha emacs init file
 (load (concat user-emacs-directory "alpha.el") nil 'nomessage 'nosuffix)
-(alpha/load-management-files)
 (alpha/load-operation-files)
 
 ;; Loading staight

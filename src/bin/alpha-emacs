@@ -14,11 +14,12 @@ fi
 EMACSDIR="$HOME/.emacs.d"
 ALPHAUSERDIR="$HOME/.alpha-emacs"
 ALPHADIR="$EMACSDIR/alpha"
+BOOTSTRAPDIR="$ALPHADIR/bootstrap"
 MNGMTDIR="$ALPHADIR/management"
 CONFDIR="$ALPHADIR/configuration"
 CONFEXAMPLE="$CONFDIR/alpha-conf.el"
 INSTALLEDCONF="$ALPHAUSERDIR/alpha-conf.el"
-ALPHA_BOOTSTRAP="$MNGMTDIR/bootstrap.el"
+ALPHA_INSTALL="$MNGMTDIR/install.el"
 ALPHA_REBUILD="$MNGMTDIR/rebuild.el"
 ALPHA_UPDATE="$MNGMTDIR/update.el"
 
@@ -85,7 +86,7 @@ install_alpha_emacs () {
   echo "Installing Alpha Emacs files..."
   cp -r $SRCDIR/* $EMACSDIR/
   echo "Alpha Emacs files successfully installed."
-  emacs -Q --batch -l $ALPHA_BOOTSTRAP
+  emacs -Q --batch -l $ALPHA_INSTALL
   exit 0
 }
 

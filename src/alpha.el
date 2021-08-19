@@ -9,6 +9,10 @@
   (concat user-emacs-directory "alpha/")
   "Alpha Emacs directory.")
 
+(defconst alpha/bootstrap-directory
+  (concat alpha/alpha-emacs-directory "bootstrap/")
+  "Directory containing the Alpha Emacs bootstrap scripts.")
+
 (defconst alpha/management-directory
   (concat alpha/alpha-emacs-directory "management/")
   "Directory containing the Alpha Emacs management scripts.")
@@ -26,13 +30,17 @@
   (load (concat alpha/alpha-emacs-directory filepath)
         nil 'nomessage 'nosuffix))
 
-(defun alpha/load-management-files ()
+(defun alpha/load-bootstrap-files ()
   "Load files necessary for Alpha Emacs management."
-  (alpha/load (concat alpha/management-directory "packages.el")))
+  (alpha/load (concat alpha/bootstrap-directory "packages.el")))
 
 (defun alpha/load-operation-files ()
   "Load files necessary for Alpha Emacs operation.."
   (alpha/load (concat alpha/operation-directory "packages.el"))
   (alpha/load (concat alpha/operation-directory "initialize.el")))
+
+(defun alpha/perform-bootstrap ()
+  "Perform Alpha Emacs boostrapping."
+  (alpha/load (concat alpha/bootstrap-directory "bootstrap.el")))
 
 ;;; alpha.el ends here
